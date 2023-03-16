@@ -31,3 +31,7 @@ Language Syntax:
 
 
 Change to print*****
+
+Run:
+flex bucol.l
+gcc lex.yy.c

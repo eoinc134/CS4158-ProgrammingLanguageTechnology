@@ -15,22 +15,26 @@ string      \"(\\.|[^\\"])*\"
 
 %%
 {space}     /* Ignore */;
-START       { return START; }
-END         { return END; }
-MAIN        { return MAIN; }
-MOVE        { return MOVE; }
-ADD         { return ADD; }
-TO          { return TO; }
-INPUT       { return INPUT; }
-PRINT       { return PRINT; }
+START       |
+END         |
+MAIN        |
+MOVE        |
+ADD         |
+TO          |
+INPUT       |
+PRINT       { printf("%s: is a valid keyword\n", yytext); }
 
-[S]+        { yylval.size = strlen(yytext); return CAPACITY; }
-{integer}   { yylval.value = atoi(yytext); return INTEGER; }
-{id}        { yylval.id = yytext; return IDENTIFIER; }
-{string}    { return STRING; }
+[S]+        { printf("%s: is a valid capacity declaration\n", yytext); }
+{integer}   { printf("%s: is a valid integer\n", yytext); }
+{id}        { printf("%s: is a valid identifier\n", yytext); }
+{string}    { printf("%s: is a valid string\n", yytext); }
 
-\.          { return LINE_TERMINATOR; }
-;           { return SEMICOLON; }
-.           { return UNKNOWN; }
+\.          { printf("%s: is a valid line terminator\n", yytext); }
+;           { printf("%s: is a valid symbol\n", yytext); }
+.           { printf("%s: is not a valid token\n", yytext);}
 
 %%
+
+main(){
+    yylex();
+}

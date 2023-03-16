@@ -816,87 +816,66 @@ YY_RULE_SETUP
 /* Ignore */;
 	YY_BREAK
 case 2:
-YY_RULE_SETUP
-#line 18 "bucol.l"
-{ return START; }
-	YY_BREAK
-case 3:
-YY_RULE_SETUP
 #line 19 "bucol.l"
-{ return END; }
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
+case 3:
 #line 20 "bucol.l"
-{ return MAIN; }
-	YY_BREAK
-case 5:
-YY_RULE_SETUP
+case 4:
 #line 21 "bucol.l"
-{ return MOVE; }
-	YY_BREAK
-case 6:
-YY_RULE_SETUP
+case 5:
 #line 22 "bucol.l"
-{ return ADD; }
-	YY_BREAK
-case 7:
-YY_RULE_SETUP
+case 6:
 #line 23 "bucol.l"
-{ return TO; }
-	YY_BREAK
-case 8:
-YY_RULE_SETUP
+case 7:
 #line 24 "bucol.l"
-{ return INPUT; }
-	YY_BREAK
+case 8:
+#line 25 "bucol.l"
 case 9:
 YY_RULE_SETUP
 #line 25 "bucol.l"
-{ return PRINT; }
+{ printf("%s: is a valid keyword\n", yytext); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
 #line 27 "bucol.l"
-{ yylval.size = strlen(yytext); return CAPACITY; }
+{ printf("%s: is a valid capacity declaration\n", yytext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
 #line 28 "bucol.l"
-{ yylval.value = atoi(yytext); return INTEGER; }
+{ printf("%s: is a valid integer\n", yytext); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
 #line 29 "bucol.l"
-{ yylval.id = yytext; return IDENTIFIER; }
+{ printf("%s: is a valid identifier\n", yytext); }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
 #line 30 "bucol.l"
-{ return STRING; }
+{ printf("%s: is a valid string\n", yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 32 "bucol.l"
-{ return LINE_TERMINATOR; }
+{ printf("%s: is a valid line terminator\n", yytext); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
 #line 33 "bucol.l"
-{ return SEMICOLON; }
+{ printf("%s: is a valid symbol\n", yytext); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
 #line 34 "bucol.l"
-{ return UNKNOWN; }
+{ printf("%s: is not a valid token\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
 #line 36 "bucol.l"
 ECHO;
 	YY_BREAK
-#line 900 "lex.yy.c"
+#line 879 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1909,3 +1888,10 @@ void yyfree (void * ptr )
 #line 36 "bucol.l"
 
 
+
+int main(int argc, char *argv[])
+{
+    yyin = fopen(argv[1], "r");
+    yylex();
+    fclose(yyin);
+}

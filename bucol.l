@@ -35,6 +35,7 @@ PRINT       { printf("%s: is a valid keyword\n", yytext); }
 
 %%
 
-main(){
-    yylex();
+main()
+{
+    
 }

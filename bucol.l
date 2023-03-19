@@ -1,7 +1,8 @@
 %{
-    #include <stdio.h>
+    //#include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
+    FILE *yyin;
 %}
 
 %option noyywrap
@@ -10,7 +11,7 @@
 
 space       [\n\t ]+
 integer     (\-|\+)?[0-9]+
-id          [a-zA-Z\_][a-zA-Z][a-zA-Z0-9\-]*
+id          (_)?[a-zA-Z][a-zA-Z0-9\-]*
 string      \"(\\.|[^\\"])*\"
 
 %%
@@ -29,13 +30,14 @@ PRINT       { printf("%s: is a valid keyword\n", yytext); }
 {id}        { printf("%s: is a valid identifier\n", yytext); }
 {string}    { printf("%s: is a valid string\n", yytext); }
 
-\.          { printf("%s: is a valid line terminator\n", yytext); }
+\.          { printf("%s: is a valid line terminator\n\n", yytext); }
 ;           { printf("%s: is a valid symbol\n", yytext); }
 .           { printf("%s: is not a valid token\n", yytext);}
 
 %%
 
-main()
-{
-    
+void main(int argc, char **argv) {
+    yyin = fopen("files/valid.bucol", "r");
+    yylex();
+    fclose(yyin);
 }

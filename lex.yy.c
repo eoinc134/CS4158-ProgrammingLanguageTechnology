@@ -1891,7 +1891,7 @@ void yyfree (void * ptr )
 
 
 void main(int argc, char **argv) {
-    yyin = fopen("files/invalid.bucol", "r");
+    yyin = fopen("files/valid.bucol", "r");
     yylex();
     fclose(yyin);
 }

@@ -524,11 +524,10 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "bucol.l"
 #line 2 "bucol.l"
-    //#include <stdio.h>
+    #include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
-    FILE *yyin;
-#line 532 "lex.yy.c"
+#line 531 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -715,9 +714,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 17 "bucol.l"
+#line 16 "bucol.l"
 
-#line 721 "lex.yy.c"
+#line 720 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -813,70 +812,70 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 18 "bucol.l"
+#line 17 "bucol.l"
 /* Ignore */;
 	YY_BREAK
 case 2:
-#line 20 "bucol.l"
+#line 19 "bucol.l"
 case 3:
-#line 21 "bucol.l"
+#line 20 "bucol.l"
 case 4:
-#line 22 "bucol.l"
+#line 21 "bucol.l"
 case 5:
-#line 23 "bucol.l"
+#line 22 "bucol.l"
 case 6:
-#line 24 "bucol.l"
+#line 23 "bucol.l"
 case 7:
-#line 25 "bucol.l"
+#line 24 "bucol.l"
 case 8:
-#line 26 "bucol.l"
+#line 25 "bucol.l"
 case 9:
 YY_RULE_SETUP
-#line 26 "bucol.l"
+#line 25 "bucol.l"
 { printf("%s: is a valid keyword\n", yytext); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 28 "bucol.l"
+#line 27 "bucol.l"
 { printf("%s: is a valid capacity declaration\n", yytext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 29 "bucol.l"
+#line 28 "bucol.l"
 { printf("%s: is a valid integer\n", yytext); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 30 "bucol.l"
+#line 29 "bucol.l"
 { printf("%s: is a valid identifier\n", yytext); }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 31 "bucol.l"
+#line 30 "bucol.l"
 { printf("%s: is a valid string\n", yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 33 "bucol.l"
+#line 32 "bucol.l"
 { printf("%s: is a valid line terminator\n\n", yytext); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 34 "bucol.l"
+#line 33 "bucol.l"
 { printf("%s: is a valid symbol\n", yytext); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 35 "bucol.l"
+#line 34 "bucol.l"
 { printf("%s: is not a valid token\n", yytext);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 37 "bucol.l"
+#line 36 "bucol.l"
 ECHO;
 	YY_BREAK
-#line 880 "lex.yy.c"
+#line 879 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1886,7 +1885,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 37 "bucol.l"
+#line 36 "bucol.l"
 
 
 

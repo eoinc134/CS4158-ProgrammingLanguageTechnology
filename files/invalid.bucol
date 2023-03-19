@@ -4,7 +4,8 @@ SSSS Y.
 SSSS Z.
 SSSS SS.
 
-MAIN. PRINT "Please enter a number?".
+MAIN.
+PRINT "Please enter a number?".
 INPUT Y.
 
 MOVE 15 TO Z.

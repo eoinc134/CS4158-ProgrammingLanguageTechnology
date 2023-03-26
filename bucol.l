@@ -1,42 +1,40 @@
 %{
     #include <stdio.h>
     #include <stdlib.h>
-    #include <string.h>
+    #include <ctype.h>
+    #include "parser.tab.h"
 %}
 
-%option noyywrap
 %option caseless
 %option yylineno
 
 space       [\n\t ]+
 integer     (\-|\+)?[0-9]+
-id          (_)?[a-zA-Z][a-zA-Z0-9\-]*
+id          [a-zA-Z\_][a-zA-Z][a-zA-Z0-9\-]*
 string      \"(\\.|[^\\"])*\"
 
 %%
 {space}     /* Ignore */;
-START       |
-END         |
-MAIN        |
-MOVE        |
-ADD         |
-TO          |
-INPUT       |
-PRINT       { printf("%s: is a valid keyword\n", yytext); }
+START       { return START; }
+END         { return END; }
+MAIN        { return MAIN; }
+MOVE        { return MOVE; }
+ADD         { return ADD; }
+TO          { return TO; }
+INPUT       { return INPUT; }
+PRINT       { return PRINT; }
 
-[S]+        { printf("%s: is a valid capacity declaration\n", yytext); }
-{integer}   { printf("%s: is a valid integer\n", yytext); }
-{id}        { printf("%s: is a valid identifier\n", yytext); }
-{string}    { printf("%s: is a valid string\n", yytext); }
+[Ss]+       { yylval.capacity = strlen(yytext); return CAPACITY; }
+{integer}   { yylval.number = atoi(yytext); return INTEGER; }
+{id}        { yylval.name = yytext; return IDENTIFIER; }
+{string}    { return STRING; }
 
-\.          { printf("%s: is a valid line terminator\n\n", yytext); }
-;           { printf("%s: is a valid symbol\n", yytext); }
-.           { printf("%s: is not a valid token\n", yytext);}
+\.          { return LINE_TERMINATOR; }
+;           { return SEMICOLON; }
+.           { return 0; }
 
 %%
 
-void main(int argc, char **argv) {
-    yyin = fopen("files/valid.bucol", "r");
-    yylex();
-    fclose(yyin);
+int yywrap(void){
+    return 1;
 }

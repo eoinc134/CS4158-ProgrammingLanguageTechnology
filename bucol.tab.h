@@ -63,7 +63,7 @@ typedef union YYSTYPE
 
 /* Line 1685 of yacc.c  */
 #line 31 "bucol.y"
-int num; int capacity; char* id;
+int num; int capacity; char* identifier;
 
 
 /* Line 1685 of yacc.c  */

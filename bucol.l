@@ -26,7 +26,7 @@ PRINT       { return PRINT; }
 
 [Ss]+       { yylval.capacity = strlen(yytext); return CAPACITY; }
 {integer}   { yylval.num = atoi(yytext); return INTEGER; }
-{id}        { yylval.id = yytext; printf("TOKEN: %s\n", yytext); return IDENTIFIER; }
+{id}        { yylval.identifier = yytext; return IDENTIFIER; }
 {string}    { return STRING; }
 
 \.          { return LINE_TERMINATOR; }
@@ -35,6 +35,6 @@ PRINT       { return PRINT; }
 
 %%
 
-int yywrap(){
+int yywrap(void) {
     return 1;
 }

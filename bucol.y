@@ -19,7 +19,7 @@ int returnIndex(char* id);
 
 // Variable structure
 typedef struct {
-   char* id;
+   char* identifier;
    int capacity;
 } var;
 
@@ -28,11 +28,11 @@ var identifiers[100];
 
 %}
 
-%union {int num; int capacity; char* id;}
+%union {int num; int capacity; char* identifier;}
 %start program
 %token <capacity> CAPACITY
 %token <num> INTEGER
-%token <id> IDENTIFIER
+%token <identifier> IDENTIFIER
 %token START       
 %token END
 %token MAIN
@@ -54,7 +54,7 @@ start               :   START LINE_TERMINATOR declarations                  {};
 declarations        :   declarations declaration                            {}
                     |                                                       {};
 
-declaration         :   CAPACITY IDENTIFIER LINE_TERMINATOR                 { printf("Cap: %d, ID: %s, LT: %s\n", $1, $2, $3 ); addVariable($1, $2); };
+declaration         :   CAPACITY IDENTIFIER LINE_TERMINATOR                 { addVariable($1, $2); };
 
 
 // Body section
@@ -66,11 +66,11 @@ operations          :   operations operation                                {}
 operation           :   move | add | input | print                          {};
 
 // Operations
-move                :   MOVE IDENTIFIER TO IDENTIFIER LINE_TERMINATOR       { varToVar($2, $4); }
-                    |   MOVE INTEGER TO IDENTIFIER LINE_TERMINATOR          { intToVar($2, $4); };
+move                :   MOVE IDENTIFIER TO IDENTIFIER LINE_TERMINATOR       { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   MOVE INTEGER TO IDENTIFIER LINE_TERMINATOR          { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
-add                 :   ADD IDENTIFIER TO IDENTIFIER LINE_TERMINATOR        { varToVar($2, $4); }
-                    |   ADD INTEGER TO IDENTIFIER LINE_TERMINATOR           { intToVar($2, $4); };
+add                 :   ADD IDENTIFIER TO IDENTIFIER LINE_TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   ADD INTEGER TO IDENTIFIER LINE_TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
 
 input               :   INPUT input_statement                               {};
@@ -110,7 +110,6 @@ void yyerror(const char *s) {
 
 // Add New Variable
 void addVariable(int capacity, char* id) {
-    printf("iD: %s\n", id);
     if(returnIndex(id) != -1) {
         printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s already exists\n", yylineno, id);
@@ -123,7 +122,7 @@ void addVariable(int capacity, char* id) {
     strcpy(temp, id);
 
     var variable;
-    variable.id = temp;
+    variable.identifier = temp;
     variable.capacity = capacity;
     identifiers[num_vars - 1] = variable;
 }
@@ -131,9 +130,7 @@ void addVariable(int capacity, char* id) {
 // Check var -> var
 void varToVar(char* id1, char* id2) {
     int id1Index = returnIndex(id1);
-    printf("id1: %s\n", id1);
     int id2Index = returnIndex(id2);
-    printf("id2: %s\n", id2);
     
     if(id1Index == -1 && id2Index != -1){
     	printf("\nProgram is invalid.\n");
@@ -165,7 +162,6 @@ void varToVar(char* id1, char* id2) {
 // Check int -> var
 void intToVar(int num, char* id) {
     int idIndex = returnIndex(id);
-    printf("Id: %s\n", id);
 
     if(idIndex == -1){ 
     	printf("\nProgram is invalid.\n");
@@ -193,7 +189,6 @@ void intToVar(int num, char* id) {
 
 // Check if Identifer Exists
 void isIdentifier(char* id) {
-    printf("id: %s\n", id);
     if(returnIndex(id) == -1) {
     	printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s does not exist\n", yylineno, id);
@@ -203,10 +198,9 @@ void isIdentifier(char* id) {
 
 // Return Identifier Index
 int returnIndex(char *id){ 
-    printf("ID: %s\n", id);
     for(int i = 0; i < num_vars; i++) {
-        if(identifiers[i].id != NULL) {
-            if(strcmp(identifiers[i].id, id) == 0) {
+        if(identifiers[i].identifier != NULL) {
+            if(strcmp(identifiers[i].identifier, id) == 0) {
                 return i;
             }
         }

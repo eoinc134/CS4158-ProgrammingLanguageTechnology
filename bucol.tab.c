@@ -89,7 +89,7 @@ int returnIndex(char* id);
 
 // Variable structure
 typedef struct {
-   char* id;
+   char* identifier;
    int capacity;
 } var;
 
@@ -151,7 +151,7 @@ typedef union YYSTYPE
 
 /* Line 214 of yacc.c  */
 #line 31 "bucol.y"
-int num; int capacity; char* id;
+int num; int capacity; char* identifier;
 
 
 /* Line 214 of yacc.c  */
@@ -1429,7 +1429,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 57 "bucol.y"
-    { addVariable((yyvsp[(1) - (3)].capacity), (yyvsp[(2) - (3)].id)); ;}
+    { addVariable((yyvsp[(1) - (3)].capacity), (yyvsp[(2) - (3)].identifier)); ;}
     break;
 
   case 7:
@@ -1464,28 +1464,28 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 69 "bucol.y"
-    { varToVar((yyvsp[(2) - (5)].id), (yyvsp[(4) - (5)].id)); ;}
+    { printf("ID1: %s, ID2: %s\n", (yyvsp[(2) - (5)].identifier), (yyvsp[(4) - (5)].identifier)); varToVar((yyvsp[(2) - (5)].identifier), (yyvsp[(4) - (5)].identifier)); ;}
     break;
 
   case 15:
 
 /* Line 1464 of yacc.c  */
 #line 70 "bucol.y"
-    { intToVar((yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].id)); ;}
+    { printf("INT: %d, ID: %s\n", (yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].identifier)); intToVar((yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].identifier)); ;}
     break;
 
   case 16:
 
 /* Line 1464 of yacc.c  */
 #line 72 "bucol.y"
-    { varToVar((yyvsp[(2) - (5)].id), (yyvsp[(4) - (5)].id)); ;}
+    { printf("ID1: %s, ID2: %s\n", (yyvsp[(2) - (5)].identifier), (yyvsp[(4) - (5)].identifier)); varToVar((yyvsp[(2) - (5)].identifier), (yyvsp[(4) - (5)].identifier)); ;}
     break;
 
   case 17:
 
 /* Line 1464 of yacc.c  */
 #line 73 "bucol.y"
-    { intToVar((yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].id)); ;}
+    { printf("INT: %d, ID: %s\n", (yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].identifier)); intToVar((yyvsp[(2) - (5)].num), (yyvsp[(4) - (5)].identifier)); ;}
     break;
 
   case 18:
@@ -1499,14 +1499,14 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 77 "bucol.y"
-    { isIdentifier((yyvsp[(1) - (3)].id)); ;}
+    { isIdentifier((yyvsp[(1) - (3)].identifier)); ;}
     break;
 
   case 20:
 
 /* Line 1464 of yacc.c  */
 #line 78 "bucol.y"
-    { isIdentifier((yyvsp[(1) - (2)].id)); ;}
+    { isIdentifier((yyvsp[(1) - (2)].identifier)); ;}
     break;
 
   case 21:
@@ -1527,7 +1527,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 83 "bucol.y"
-    { isIdentifier((yyvsp[(1) - (3)].id)); ;}
+    { isIdentifier((yyvsp[(1) - (3)].identifier)); ;}
     break;
 
   case 24:
@@ -1541,7 +1541,7 @@ yyreduce:
 
 /* Line 1464 of yacc.c  */
 #line 85 "bucol.y"
-    { isIdentifier((yyvsp[(1) - (2)].id)); ;}
+    { isIdentifier((yyvsp[(1) - (2)].identifier)); ;}
     break;
 
   case 26:
@@ -1791,7 +1791,6 @@ void yyerror(const char *s) {
 
 // Add New Variable
 void addVariable(int capacity, char* id) {
-    printf("iD: %s\n", id);
     if(returnIndex(id) != -1) {
         printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s already exists\n", yylineno, id);
@@ -1804,7 +1803,7 @@ void addVariable(int capacity, char* id) {
     strcpy(temp, id);
 
     var variable;
-    variable.id = temp;
+    variable.identifier = temp;
     variable.capacity = capacity;
     identifiers[num_vars - 1] = variable;
 }
@@ -1812,9 +1811,7 @@ void addVariable(int capacity, char* id) {
 // Check var -> var
 void varToVar(char* id1, char* id2) {
     int id1Index = returnIndex(id1);
-    printf("id1: %s\n", id1);
     int id2Index = returnIndex(id2);
-    printf("id2: %s\n", id2);
     
     if(id1Index == -1 && id2Index != -1){
     	printf("\nProgram is invalid.\n");
@@ -1846,7 +1843,6 @@ void varToVar(char* id1, char* id2) {
 // Check int -> var
 void intToVar(int num, char* id) {
     int idIndex = returnIndex(id);
-    printf("Id: %s\n", id);
 
     if(idIndex == -1){ 
     	printf("\nProgram is invalid.\n");
@@ -1874,7 +1870,6 @@ void intToVar(int num, char* id) {
 
 // Check if Identifer Exists
 void isIdentifier(char* id) {
-    printf("id: %s\n", id);
     if(returnIndex(id) == -1) {
     	printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s does not exist\n", yylineno, id);
@@ -1884,10 +1879,9 @@ void isIdentifier(char* id) {
 
 // Return Identifier Index
 int returnIndex(char *id){ 
-    printf("ID: %s\n", id);
     for(int i = 0; i < num_vars; i++) {
-        if(identifiers[i].id != NULL) {
-            if(strcmp(identifiers[i].id, id) == 0) {
+        if(identifiers[i].identifier != NULL) {
+            if(strcmp(identifiers[i].identifier, id) == 0) {
                 return i;
             }
         }

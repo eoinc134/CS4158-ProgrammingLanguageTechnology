@@ -865,7 +865,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 29 "bucol.l"
-{ yylval.id = yytext; printf("TOKEN: %s\n", yytext); return IDENTIFIER; }
+{ yylval.identifier = yytext; return IDENTIFIER; }
 	YY_BREAK
 case 13:
 /* rule 13 can match eol */
@@ -1907,6 +1907,6 @@ void yyfree (void * ptr )
 
 
 
-int yywrap(){
+int yywrap(void) {
     return 1;
 }

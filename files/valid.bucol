@@ -8,7 +8,7 @@ PRINT "Please enter a number?".
 INPUT _Y.
 
 MOVE 15 TO Z.
-ADD Y TO Z.
+ADD _Y TO Z.
 PRINT XY-1;" + ";Y;"=";Z.
 
 END.

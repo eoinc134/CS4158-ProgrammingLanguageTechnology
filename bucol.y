@@ -54,7 +54,7 @@ start               :   START LINE_TERMINATOR declarations                  {};
 declarations        :   declarations declaration                            {}
                     |                                                       {};
 
-declaration         :   CAPACITY IDENTIFIER LINE_TERMINATOR                 { addVariable($1, $2); };
+declaration         :   CAPACITY IDENTIFIER LINE_TERMINATOR                 { printf("Cap: %d, ID: %s, LT: %s\n", $1, $2, $3 ); addVariable($1, $2); };
 
 
 // Body section
@@ -73,28 +73,34 @@ add                 :   ADD IDENTIFIER TO IDENTIFIER LINE_TERMINATOR        { va
                     |   ADD INTEGER TO IDENTIFIER LINE_TERMINATOR           { intToVar($2, $4); };
 
 
-input               :   INPUT input_statement                               {}
+input               :   INPUT input_statement                               {};
 input_statement     :   IDENTIFIER SEMICOLON input_statement                { isIdentifier($1); }
                     |   IDENTIFIER LINE_TERMINATOR                          { isIdentifier($1); };
 
 
-print               :   PRINT print_statement                               {}
+print               :   PRINT print_statement                               {};
 print_statement     :   STRING SEMICOLON print_statement                    {}
                     |   IDENTIFIER SEMICOLON print_statement                { isIdentifier($1); }
                     |   STRING LINE_TERMINATOR                              {}
                     |   IDENTIFIER LINE_TERMINATOR                          { isIdentifier($1); };
 
 // End section
-end                 :   END LINE_TERMINATOR {};
+end                 :   END LINE_TERMINATOR                                 {};
 %%
 
 // Main Function
 extern FILE *yyin;
-int main() {
-    printf("Enter the program text:\n");
-	printf(">>> \n");
-	yyparse();
+//int main() {
+  //  printf("Enter the program text:\n");
+	//printf(">>> \n");
+	//yyparse();
+//}
+void main(int argc, char **argv) {
+    yyin = fopen("files/valid.bucol", "r");
+    yyparse();
+    fclose(yyin);
 }
+
 
 // Return Error
 void yyerror(const char *s) {
@@ -104,6 +110,7 @@ void yyerror(const char *s) {
 
 // Add New Variable
 void addVariable(int capacity, char* id) {
+    printf("iD: %s\n", id);
     if(returnIndex(id) != -1) {
         printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s already exists\n", yylineno, id);
@@ -124,7 +131,9 @@ void addVariable(int capacity, char* id) {
 // Check var -> var
 void varToVar(char* id1, char* id2) {
     int id1Index = returnIndex(id1);
+    printf("id1: %s\n", id1);
     int id2Index = returnIndex(id2);
+    printf("id2: %s\n", id2);
     
     if(id1Index == -1 && id2Index != -1){
     	printf("\nProgram is invalid.\n");
@@ -156,10 +165,11 @@ void varToVar(char* id1, char* id2) {
 // Check int -> var
 void intToVar(int num, char* id) {
     int idIndex = returnIndex(id);
+    printf("Id: %s\n", id);
 
     if(idIndex == -1){ 
     	printf("\nProgram is invalid.\n");
-        fprintf(stderr, "Error on line %d: variable %s does not exist\n", yylineno, id);
+        fprintf(stderr, "Error on line %d: Variable %s does not exist\n", yylineno, id);
         exit(0);
 
     } else {
@@ -183,6 +193,7 @@ void intToVar(int num, char* id) {
 
 // Check if Identifer Exists
 void isIdentifier(char* id) {
+    printf("id: %s\n", id);
     if(returnIndex(id) == -1) {
     	printf("\nProgram is invalid.\n");
         fprintf(stderr, "Error on line %d: Variable %s does not exist\n", yylineno, id);
@@ -192,6 +203,7 @@ void isIdentifier(char* id) {
 
 // Return Identifier Index
 int returnIndex(char *id){ 
+    printf("ID: %s\n", id);
     for(int i = 0; i < num_vars; i++) {
         if(identifiers[i].id != NULL) {
             if(strcmp(identifiers[i].id, id) == 0) {

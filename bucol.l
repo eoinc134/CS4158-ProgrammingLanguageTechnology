@@ -11,7 +11,7 @@
 space       [\n\t ]+
 integer     (\-|\+)?[0-9]+
 id          [a-zA-Z\_][a-zA-Z0-9\-]*
-string      \"(\\.|[^\\"])*\"
+string      \"([^\\"])*\"
 
 %%
 {space}     /* Ignore */;
@@ -26,7 +26,7 @@ PRINT       { return PRINT; }
 
 [Ss]+       { yylval.capacity = strlen(yytext); return CAPACITY; }
 {integer}   { yylval.num = atoi(yytext); return INTEGER; }
-{id}        { yylval.id = yytext; return IDENTIFIER; }
+{id}        { yylval.id = yytext; printf("TOKEN: %s\n", yytext); return IDENTIFIER; }
 {string}    { return STRING; }
 
 \.          { return LINE_TERMINATOR; }
@@ -35,6 +35,6 @@ PRINT       { return PRINT; }
 
 %%
 
-int yywrap(void){
+int yywrap(){
     return 1;
 }

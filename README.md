@@ -8,4 +8,4 @@ RUN COMMANDS:
 - bison –d bucol.y
 - cc –c lex.yy.c bucol.tab.c
 - cc –o bucol lex.yy.o bucol.tab.o –ll
-- bucol
+- ./bucol.exe

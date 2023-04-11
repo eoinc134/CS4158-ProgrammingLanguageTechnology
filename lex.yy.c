@@ -876,7 +876,7 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 32 "bucol.l"
-{ return LINE_TERMINATOR; }
+{ return TERMINATOR; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP

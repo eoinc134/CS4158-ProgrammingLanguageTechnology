@@ -49,7 +49,7 @@
      TO = 266,
      INPUT = 267,
      PRINT = 268,
-     LINE_TERMINATOR = 269,
+     TERMINATOR = 269,
      SEMICOLON = 270,
      STRING = 271
    };

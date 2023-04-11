@@ -29,7 +29,7 @@ PRINT       { return PRINT; }
 {id}        { yylval.identifier = yytext; return IDENTIFIER; }
 {string}    { return STRING; }
 
-\.          { return LINE_TERMINATOR; }
+\.          { return TERMINATOR; }
 ;           { return SEMICOLON; }
 .           { return 0; }
 

@@ -5,7 +5,7 @@ SSSS Z.
 
 MAIN.
 PRINT "Please enter a number?".
-INPUT _Y.
+INPUT XY-1;_Y.
 
 MOVE 15 TO Z.
 ADD _Y TO Z.

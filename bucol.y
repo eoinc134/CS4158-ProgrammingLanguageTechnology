@@ -41,7 +41,7 @@ var identifiers[100];
 %token TO
 %token INPUT
 %token PRINT 
-%token LINE_TERMINATOR
+%token TERMINATOR
 %token SEMICOLON
 %token STRING
 
@@ -49,16 +49,16 @@ var identifiers[100];
 program             :   start body end                                      { printf("This program is well-formed.\n"); exit(0) };
 
 // Start section
-start               :   START LINE_TERMINATOR declarations                  {};
+start               :   START TERMINATOR declarations                  {};
 
 declarations        :   declarations declaration                            {}
                     |                                                       {};
 
-declaration         :   CAPACITY IDENTIFIER LINE_TERMINATOR                 { addVariable($1, $2); };
+declaration         :   CAPACITY IDENTIFIER TERMINATOR                 { addVariable($1, $2); };
 
 
 // Body section
-body                :   MAIN LINE_TERMINATOR operations                     {};
+body                :   MAIN TERMINATOR operations                     {};
 
 operations          :   operations operation                                {}
                     |                                                       {};
@@ -66,26 +66,26 @@ operations          :   operations operation                                {}
 operation           :   move | add | input | print                          {};
 
 // Operations
-move                :   MOVE IDENTIFIER TO IDENTIFIER LINE_TERMINATOR       { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   MOVE INTEGER TO IDENTIFIER LINE_TERMINATOR          { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
+move                :   MOVE IDENTIFIER TO IDENTIFIER TERMINATOR       { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   MOVE INTEGER TO IDENTIFIER TERMINATOR          { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
-add                 :   ADD IDENTIFIER TO IDENTIFIER LINE_TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   ADD INTEGER TO IDENTIFIER LINE_TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
+add                 :   ADD IDENTIFIER TO IDENTIFIER TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   ADD INTEGER TO IDENTIFIER TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
 
 input               :   INPUT input_statement                               {};
 input_statement     :   IDENTIFIER SEMICOLON input_statement                { isIdentifier($1); }
-                    |   IDENTIFIER LINE_TERMINATOR                          { isIdentifier($1); };
+                    |   IDENTIFIER TERMINATOR                          { isIdentifier($1); };
 
 
 print               :   PRINT print_statement                               {};
 print_statement     :   STRING SEMICOLON print_statement                    {}
                     |   IDENTIFIER SEMICOLON print_statement                { isIdentifier($1); }
-                    |   STRING LINE_TERMINATOR                              {}
-                    |   IDENTIFIER LINE_TERMINATOR                          { isIdentifier($1); };
+                    |   STRING TERMINATOR                              {}
+                    |   IDENTIFIER TERMINATOR                          { isIdentifier($1); };
 
 // End section
-end                 :   END LINE_TERMINATOR                                 {};
+end                 :   END TERMINATOR                                 {};
 %%
 
 // Main Function

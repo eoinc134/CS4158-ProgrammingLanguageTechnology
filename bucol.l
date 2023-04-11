@@ -2,7 +2,7 @@
     #include <stdio.h>
     #include <stdlib.h>
     #include <ctype.h>
-    #include "parser.tab.h"
+    #include "bucol.tab.h"
 %}
 
 %option caseless
@@ -10,8 +10,8 @@
 
 space       [\n\t ]+
 integer     (\-|\+)?[0-9]+
-id          [a-zA-Z\_][a-zA-Z][a-zA-Z0-9\-]*
-string      \"(\\.|[^\\"])*\"
+id          [a-zA-Z\_][a-zA-Z0-9\-]*
+string      \"([^\\"])*\"
 
 %%
 {space}     /* Ignore */;
@@ -25,16 +25,16 @@ INPUT       { return INPUT; }
 PRINT       { return PRINT; }
 
 [Ss]+       { yylval.capacity = strlen(yytext); return CAPACITY; }
-{integer}   { yylval.number = atoi(yytext); return INTEGER; }
-{id}        { yylval.name = yytext; return IDENTIFIER; }
+{integer}   { yylval.num = atoi(yytext); return INTEGER; }
+{id}        { yylval.identifier = yytext; return IDENTIFIER; }
 {string}    { return STRING; }
 
-\.          { return LINE_TERMINATOR; }
+\.          { return TERMINATOR; }
 ;           { return SEMICOLON; }
 .           { return 0; }
 
 %%
 
-int yywrap(void){
+int yywrap(void) {
     return 1;
 }

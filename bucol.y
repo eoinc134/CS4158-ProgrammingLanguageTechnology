@@ -46,46 +46,46 @@ var identifiers[100];
 %token STRING
 
 %%
-program             :   start body end                                      { printf("This program is well-formed.\n"); exit(0) };
+program             :   start body end                                  { printf("This program is well-formed.\n"); exit(0) };
 
 // Start section
-start               :   START TERMINATOR declarations                  {};
+start               :   START TERMINATOR declarations                   { };
 
-declarations        :   declarations declaration                            {}
-                    |                                                       {};
+declarations        :   declarations declaration                        { }
+                    |                                                   { };
 
-declaration         :   CAPACITY IDENTIFIER TERMINATOR                 { addVariable($1, $2); };
+declaration         :   CAPACITY IDENTIFIER TERMINATOR                  { addVariable($1, $2); };
 
 
 // Body section
-body                :   MAIN TERMINATOR operations                     {};
+body                :   MAIN TERMINATOR operations                      { };
 
-operations          :   operations operation                                {}
-                    |                                                       {};
+operations          :   operations operation                            { }
+                    |                                                   { };
 
-operation           :   move | add | input | print                          {};
+operation           :   move | add | input | print                      { };
 
 // Operations
-move                :   MOVE IDENTIFIER TO IDENTIFIER TERMINATOR       { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   MOVE INTEGER TO IDENTIFIER TERMINATOR          { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
+move                :   MOVE IDENTIFIER TO IDENTIFIER TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   MOVE INTEGER TO IDENTIFIER TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
-add                 :   ADD IDENTIFIER TO IDENTIFIER TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   ADD INTEGER TO IDENTIFIER TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
-
-
-input               :   INPUT input_statement                               {};
-input_statement     :   IDENTIFIER SEMICOLON input_statement                { isIdentifier($1); }
-                    |   IDENTIFIER TERMINATOR                          { isIdentifier($1); };
+add                 :   ADD IDENTIFIER TO IDENTIFIER TERMINATOR         { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
+                    |   ADD INTEGER TO IDENTIFIER TERMINATOR            { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
 
 
-print               :   PRINT print_statement                               {};
-print_statement     :   STRING SEMICOLON print_statement                    {}
-                    |   IDENTIFIER SEMICOLON print_statement                { isIdentifier($1); }
-                    |   STRING TERMINATOR                              {}
-                    |   IDENTIFIER TERMINATOR                          { isIdentifier($1); };
+input               :   INPUT input_statement                           { };
+input_statement     :   IDENTIFIER SEMICOLON input_statement            { isIdentifier($1); }
+                    |   IDENTIFIER TERMINATOR                           { isIdentifier($1); };
+
+
+print               :   PRINT print_statement                           { };
+print_statement     :   STRING SEMICOLON print_statement                { }
+                    |   IDENTIFIER SEMICOLON print_statement            { isIdentifier($1); }
+                    |   STRING TERMINATOR                               { }
+                    |   IDENTIFIER TERMINATOR                           { isIdentifier($1); };
 
 // End section
-end                 :   END TERMINATOR                                 {};
+end                 :   END TERMINATOR                                  { };
 %%
 
 // Main Function

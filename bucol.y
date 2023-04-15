@@ -66,11 +66,11 @@ operations          :   operations operation                            { }
 operation           :   move | add | input | print                      { };
 
 // Operations
-move                :   MOVE IDENTIFIER TO IDENTIFIER TERMINATOR        { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   MOVE INTEGER TO IDENTIFIER TERMINATOR           { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
+move                :   MOVE IDENTIFIER TO IDENTIFIER TERMINATOR        { varToVar($2, $4); }
+                    |   MOVE INTEGER TO IDENTIFIER TERMINATOR           { intToVar($2, $4); };
 
-add                 :   ADD IDENTIFIER TO IDENTIFIER TERMINATOR         { printf("ID1: %s, ID2: %s\n", $2, $4); varToVar($2, $4); }
-                    |   ADD INTEGER TO IDENTIFIER TERMINATOR            { printf("INT: %d, ID: %s\n", $2, $4); intToVar($2, $4); };
+add                 :   ADD IDENTIFIER TO IDENTIFIER TERMINATOR         { varToVar($2, $4); }
+                    |   ADD INTEGER TO IDENTIFIER TERMINATOR            { intToVar($2, $4); };
 
 
 input               :   INPUT input_statement                           { };

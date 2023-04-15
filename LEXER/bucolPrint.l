@@ -36,7 +36,7 @@ PRINT       { printf("%s: is a valid keyword\n", yytext); }
 %%
 
 void main(int argc, char **argv) {
-    yyin = fopen("files/valid.bucol", "r");
+    yyin = fopen("invalid.bucol", "r");
     yylex();
     fclose(yyin);
 }

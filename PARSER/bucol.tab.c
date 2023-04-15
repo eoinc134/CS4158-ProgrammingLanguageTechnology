@@ -1777,7 +1777,7 @@ extern FILE *yyin;
 	//yyparse();
 //}
 void main(int argc, char **argv) {
-    yyin = fopen("files/valid.bucol", "r");
+    yyin = fopen("valid.bucol", "r");
     yyparse();
     fclose(yyin);
 }

@@ -26,7 +26,7 @@ PRINT       { return PRINT; }
 
 [Ss]+       { yylval.capacity = strlen(yytext); return CAPACITY; }
 {integer}   { yylval.num = atoi(yytext); return INTEGER; }
-{id}        { yylval.identifier = yytext; return IDENTIFIER; }
+{id}        { yylval.identifier = strdup(yytext); return IDENTIFIER; }
 {string}    { return STRING; }
 
 \.          { return TERMINATOR; }
